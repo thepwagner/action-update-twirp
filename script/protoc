@@ -11,4 +11,7 @@ exec docker run --rm \
   -w "/src" \
   "$BUF_IMAGE_NAME" \
   find proto/ -name "*.proto" -exec \
-    buf protoc --go_out=paths=source_relative:/src {} \;
+    buf protoc \
+      --go_out=paths=source_relative:/src \
+      --twirp_out=paths=source_relative:/src \
+      {} \;

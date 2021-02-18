@@ -4,7 +4,17 @@ package actionupdate.v1;
 option go_package = "github.com/thepwagner/action-update-twirp/proto/actionupdate/v1";
 
 message Dependency {
-    string path = 1;
-    string version = 2;
-    bool indirect = 3;
+  string path = 1;
+  string version = 2;
+  bool indirect = 3;
+}
+
+message ListDependenciesRequest {}
+
+message ListDependenciesResponse {
+  repeated Dependency dependencies = 1;
+}
+
+service UpdateService {
+  rpc ListDependencies(ListDependenciesRequest) returns (ListDependenciesResponse);
 }

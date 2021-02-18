@@ -11,14 +11,16 @@ RUN apk --no-cache add --virtual .build curl \
   && apk del .build
 
 
-FROM golang:1.15.2 AS protoc-gen-go
+FROM golang:1.15.2 AS protoc-plugins-go
 RUN mkdir /app
 WORKDIR /app
 COPY go.mod .
 COPY go.sum .
 RUN go mod download
 RUN go build -o /protoc-gen-go github.com/golang/protobuf/protoc-gen-go
+RUN go build -o /protoc-gen-twirp github.com/twitchtv/twirp/protoc-gen-twirp
 
 
 FROM buf AS protoc
-COPY --from=protoc-gen-go /protoc-gen-go /usr/local/bin/protoc-gen-go
+COPY --from=protoc-plugins-go /protoc-gen-go /usr/local/bin/protoc-gen-go
+COPY --from=protoc-plugins-go /protoc-gen-twirp /usr/local/bin/protoc-gen-twirp
