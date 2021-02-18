@@ -4,19 +4,26 @@ import (
 	"context"
 	"fmt"
 	"strings"
+	"sync"
 
+	"github.com/sirupsen/logrus"
 	"github.com/thepwagner/action-update-twirp/proto/actionupdate/v1"
 	"github.com/thepwagner/action-update/updater"
 )
 
 type Updater struct {
+	root        string
 	updaterName string
 	imageName   string
+
+	mu        sync.Mutex
+	container *Container
 }
 
-func NewUpdater(imageName string) *Updater {
+func NewUpdater(root, imageName string) *Updater {
 	updaterName := fmt.Sprintf("twirp-%s", strings.Split(imageName, ":")[0])
 	return &Updater{
+		root:        root,
 		updaterName: updaterName,
 		imageName:   imageName,
 	}
@@ -28,7 +35,7 @@ func (u *Updater) Name() string {
 	return u.updaterName
 }
 
-func (u Updater) Dependencies(ctx context.Context) ([]updater.Dependency, error) {
+func (u *Updater) Dependencies(ctx context.Context) ([]updater.Dependency, error) {
 	svc, err := u.updateService(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("creating update container: %w", err)
@@ -47,17 +54,27 @@ func (u Updater) Dependencies(ctx context.Context) ([]updater.Dependency, error)
 	return ret, nil
 }
 
-func (u Updater) updateService(ctx context.Context) (v1.UpdateService, error) {
-	// TODO: start container, twirp it up
-	return nil, nil
+func (u *Updater) updateService(ctx context.Context) (v1.UpdateService, error) {
+	u.mu.Lock()
+	defer u.mu.Unlock()
+
+	if u.container == nil {
+		logrus.WithField("image", u.imageName).Info("booting updater container")
+		ctr, err := newContainer(ctx, u.root, u.imageName)
+		if err != nil {
+			return nil, err
+		}
+		u.container = ctr
+	}
+	return u.container.UpdateService(), nil
 }
 
-func (u Updater) Check(context.Context, updater.Dependency, func(string) bool) (*updater.Update, error) {
+func (u *Updater) Check(context.Context, updater.Dependency, func(string) bool) (*updater.Update, error) {
 	// TODO: implement
 	return nil, nil
 }
 
-func (u Updater) ApplyUpdate(context.Context, updater.Update) error {
+func (u *Updater) ApplyUpdate(context.Context, updater.Update) error {
 	// TODO: implement
 	return nil
 }
