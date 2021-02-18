@@ -1,0 +1,7 @@
+export BUF_IMAGE_NAME=action-update-twirp/buf
+
+build_buf() {
+  TARGET=${1:-protoc}
+  cd "${ROOT}/script/tools/buf"
+  docker build --target $TARGET -t "$BUF_IMAGE_NAME" .
+}

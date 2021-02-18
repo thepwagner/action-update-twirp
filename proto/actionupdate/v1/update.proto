@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package actionupdate.v1;
+option go_package = "github.com/thepwagner/action-update-twirp/proto/actionupdate/v1";
+
+message Dependency {
+    string path = 1;
+    string version = 2;
+    bool indirect = 3;
+}

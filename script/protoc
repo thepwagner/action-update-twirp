@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+. "${ROOT}/script/_common"
+
+build_buf
+set -x
+
+exec docker run --rm \
+  -v "${ROOT}:/src" \
+  -w "/src" \
+  "$BUF_IMAGE_NAME" \
+  find proto/ -name "*.proto" -exec \
+    buf protoc --go_out=paths=source_relative:/src {} \;

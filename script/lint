@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+. "${ROOT}/script/_common"
+
+build_buf
+set -x
+
+exec docker run --rm \
+  -v "${ROOT}:/src:ro" \
+  -w "/src" \
+  "$BUF_IMAGE_NAME" \
+  buf lint proto/
