@@ -45,15 +45,19 @@ func newContainer(ctx context.Context, sourceDir, image string) (*Container, err
 		return nil, err
 	}
 
-	apiAddr, err := boundPort(ctx, docker, containerID)
+	apiAddr, err := inspectBoundPort(ctx, docker, containerID)
 	if err != nil {
-		_ = docker.Close()
+		_ = killContainer(docker, containerID)
+		return nil, err
+	}
+	buf, err := setupLogBuffer(ctx, docker, containerID)
+	if err != nil {
+		_ = killContainer(docker, containerID)
 		return nil, err
 	}
 
-	buf, err := setupLogBuffer(ctx, docker, containerID)
-	if err != nil {
-		_ = docker.Close()
+	if err := waitForAPI(ctx, apiAddr); err != nil {
+		_ = killContainer(docker, containerID)
 		return nil, err
 	}
 
@@ -100,7 +104,7 @@ func createContainer(ctx context.Context, docker *client.Client, sourceDir strin
 	return containerID, nil
 }
 
-func boundPort(ctx context.Context, docker *client.Client, containerID string) (string, error) {
+func inspectBoundPort(ctx context.Context, docker *client.Client, containerID string) (string, error) {
 	inspect, err := docker.ContainerInspect(ctx, containerID)
 	if err != nil {
 		return "", fmt.Errorf("inspecting container: %w", err)
@@ -135,14 +139,46 @@ func setupLogBuffer(ctx context.Context, docker *client.Client, containerID stri
 	return buf, nil
 }
 
+func waitForAPI(ctx context.Context, addr string) error {
+	req, err := http.NewRequest("GET", addr, nil)
+	if err != nil {
+		return err
+	}
+	req = req.WithContext(ctx)
+
+	start := time.Now()
+	for {
+		if time.Since(start) > 30*time.Second {
+			return fmt.Errorf("timed out waiting for API")
+		}
+		if _, err := http.DefaultClient.Do(req); err == nil {
+			logrus.WithField("dur", time.Since(start).Milliseconds()).Debug("server ready")
+			// any response is fine
+			return nil
+		}
+		time.Sleep(100 * time.Millisecond)
+	}
+}
+
 func (c *Container) UpdateService() v1.UpdateService {
 	return v1.NewUpdateServiceJSONClient(c.apiAddr, http.DefaultClient)
 }
 
 func (c *Container) Close() error {
-	defer c.docker.Close()
+	logrus.WithField("container_id", c.id).Debug("cleaning up container")
+	if err := killContainer(c.docker, c.id); err != nil {
+		return err
+	}
+	return nil
+}
+
+func killContainer(docker *client.Client, containerID string) error {
+	defer docker.Close()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	return c.docker.ContainerKill(ctx, c.id, "SIGKILL")
+	if err := docker.ContainerKill(ctx, containerID, "SIGKILL"); err != nil {
+		return err
+	}
+	return nil
 }

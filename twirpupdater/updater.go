@@ -78,3 +78,13 @@ func (u *Updater) ApplyUpdate(context.Context, updater.Update) error {
 	// TODO: implement
 	return nil
 }
+
+func (u *Updater) Close() error {
+	u.mu.Lock()
+	defer u.mu.Unlock()
+	if u.container == nil {
+		logrus.Debug("closing updater without container")
+		return nil
+	}
+	return u.container.Close()
+}
