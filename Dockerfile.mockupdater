@@ -1,0 +1,14 @@
+FROM golang:1.16.0 AS builder
+
+WORKDIR /app
+COPY go.mod /app
+COPY go.sum /app
+RUN go mod download
+
+COPY . /app
+RUN go build -o /update-twirp-mockupdater /app/mockupdater
+
+FROM debian:buster-slim
+COPY --from=builder /update-twirp-mockupdater /update-twirp-mockupdater
+EXPOSE 9600
+ENTRYPOINT ["/update-twirp-mockupdater"]

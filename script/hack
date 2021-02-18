@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT"
+
+docker build -f Dockerfile.mockupdater -t action-update-twirp-mockupdater .
