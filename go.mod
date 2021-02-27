@@ -3,7 +3,7 @@ module github.com/thepwagner/action-update-twirp
 go 1.15
 
 require (
-	github.com/containerd/containerd v1.5.0-beta.1 // indirect
+	github.com/containerd/containerd v1.5.0-beta.2 // indirect
 	github.com/docker/docker v20.10.3+incompatible
 	github.com/docker/go-connections v0.4.0
 	github.com/golang/protobuf v1.4.3
