@@ -546,8 +546,8 @@ github.com/thepwagner/action-update v0.0.39 h1:Thmhkns5NQ79yQb9BCcTfMN0gf9PHb/8+
 github.com/thepwagner/action-update v0.0.39/go.mod h1:nll1ARae4nAAQ9a3lWzLPY0c+KgjpTJdgtKaVom/iAE=
 github.com/tmc/grpc-websocket-proxy v0.0.0-20170815181823-89b8d40f7ca8/go.mod h1:ncp9v5uamzpCO7NfCPTXjqaC+bZgJeR0sMTm6dMHP7U=
 github.com/tmc/grpc-websocket-proxy v0.0.0-20190109142713-0ad062ec5ee5/go.mod h1:ncp9v5uamzpCO7NfCPTXjqaC+bZgJeR0sMTm6dMHP7U=
-github.com/twitchtv/twirp v7.1.1+incompatible h1:VgwjwtPtKRwVt80FRXNCSkm30+n4YhqroQMkjLEbtik=
-github.com/twitchtv/twirp v7.1.1+incompatible/go.mod h1:RRJoFSAmTEh2weEqWtpPE3vFK5YBhA6bqp2l1kfCC5A=
+github.com/twitchtv/twirp v7.2.0+incompatible h1:cXERdTtJqg8+OZdPCPGG2xWW8g+IKQ6zYjQTk9tWcCk=
+github.com/twitchtv/twirp v7.2.0+incompatible/go.mod h1:RRJoFSAmTEh2weEqWtpPE3vFK5YBhA6bqp2l1kfCC5A=
 github.com/urfave/cli v0.0.0-20171014202726-7bc6a0acffa5/go.mod h1:70zkFmudgCuE/ngEzBv17Jvp/497gISqfk5gWijbERA=
 github.com/urfave/cli v1.20.0/go.mod h1:70zkFmudgCuE/ngEzBv17Jvp/497gISqfk5gWijbERA=
 github.com/urfave/cli v1.22.1/go.mod h1:Gos4lmkARVdJ6EkW0WaNv/tZAAMe9V7XWyB60NtXRu0=
