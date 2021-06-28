@@ -13,7 +13,7 @@ require (
 	github.com/thepwagner/action-update v0.0.40
 	github.com/twitchtv/twirp v8.1.0+incompatible
 	golang.org/x/time v0.0.0-20201208040808-7e3f01d25324 // indirect
-	google.golang.org/protobuf v1.26.0
+	google.golang.org/protobuf v1.27.0
 )
 
 replace github.com/docker/docker => github.com/moby/moby v17.12.0-ce-rc1.0.20200916142827-bd33bbf0497b+incompatible
