@@ -10,7 +10,7 @@ require (
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.8.1
-	github.com/thepwagner/action-update v0.0.40
+	github.com/thepwagner/action-update v0.0.41
 	github.com/twitchtv/twirp v8.1.0+incompatible
 	golang.org/x/time v0.0.0-20201208040808-7e3f01d25324 // indirect
 	google.golang.org/protobuf v1.27.1
