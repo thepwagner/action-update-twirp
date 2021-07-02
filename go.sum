@@ -601,8 +601,8 @@ github.com/syndtr/gocapability v0.0.0-20170704070218-db04d3cc01c8/go.mod h1:hkRG
 github.com/syndtr/gocapability v0.0.0-20180916011248-d98352740cb2/go.mod h1:hkRG7XYTFWNJGYcbNJQlaLq0fg1yr4J4t/NcTQtrfww=
 github.com/syndtr/gocapability v0.0.0-20200815063812-42c35b437635/go.mod h1:hkRG7XYTFWNJGYcbNJQlaLq0fg1yr4J4t/NcTQtrfww=
 github.com/tchap/go-patricia v2.2.6+incompatible/go.mod h1:bmLyhP68RS6kStMGxByiQ23RP/odRBOTVjwp2cDyi6I=
-github.com/thepwagner/action-update v0.0.41 h1:syomANPfxGj9u0++EbfkCNXTnB4WcrIcHyD6MqhbfSs=
-github.com/thepwagner/action-update v0.0.41/go.mod h1:8bS4FtBHDFA5S2l4GU2OjWzT0wh3O2K1uCUMpoiWdE0=
+github.com/thepwagner/action-update v0.0.42 h1:LATyaE1rryr9t7ck2HjHfAk8TB712Y/LN1I86v8945o=
+github.com/thepwagner/action-update v0.0.42/go.mod h1:8bS4FtBHDFA5S2l4GU2OjWzT0wh3O2K1uCUMpoiWdE0=
 github.com/tmc/grpc-websocket-proxy v0.0.0-20170815181823-89b8d40f7ca8/go.mod h1:ncp9v5uamzpCO7NfCPTXjqaC+bZgJeR0sMTm6dMHP7U=
 github.com/tmc/grpc-websocket-proxy v0.0.0-20190109142713-0ad062ec5ee5/go.mod h1:ncp9v5uamzpCO7NfCPTXjqaC+bZgJeR0sMTm6dMHP7U=
 github.com/twitchtv/twirp v8.1.0+incompatible h1:KGXanpa9LXdVE/V5P/tA27rkKFmXRGCtSNT7zdeeVOY=
